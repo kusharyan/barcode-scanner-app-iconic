@@ -1,20 +1,82 @@
-<ion-header [translucent]="true">
+<ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <ion-buttons  slot="end">
+      <ion-button fill="clear" color="dark" routerLink="cart">
+        <ion-icon name="cart-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-item lines="none" class="ion-margin-vertical">
+    <ion-label>
+      Hello,
+      <p>
+      <ion-text color="dark">
+        Kush Aryan Pilli
+      </ion-text>
+    </p>
+    </ion-label>
+    <ion-thumbnail slot="end">
+      <img [src]="'assets/avatar.jpeg'"/>
+    </ion-thumbnail>
+  </ion-item>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <ion-list-header>Your Insigths</ion-list-header>
+  <ion-row class="ion-margin">
+    <ion-col size="6" (click)="startScanBarcode()">
+      <ion-card>
+        <ion-thumbnail  [style.background]="'rgba(240,94,112, 0.2)'">
+          <ion-icon name="scan-outline" color="teritiary"></ion-icon>
+        </ion-thumbnail>
+        <ion-text>Scan Product Barcode</ion-text>
+      </ion-card>
+    </ion-col>
+
+    <ion-col size="6">
+      <ion-card routerLink="products">
+        <ion-thumbnail  [style.background]="'rgba(255,152,0, 0.2)'">
+          <ion-icon name="list-outline" color="warning"></ion-icon>
+        </ion-thumbnail>
+        <ion-text>Products</ion-text>
+      </ion-card>
+    </ion-col>
+
+    <ion-col size="6">
+      <ion-card>
+        <ion-thumbnail  [style.background]="'rgba(76,175,80, 0.2)'">
+          <ion-icon name="checkmark-circle" color="success"></ion-icon>
+        </ion-thumbnail>
+        <ion-text>Transcations</ion-text>
+      </ion-card>
+    </ion-col>
+
+    <ion-col size="6">
+      <ion-card>
+        <ion-thumbnail  [style.background]="'rgba(94,155,240, 0.2)'">
+          <ion-icon name="bag-outline" color="secondary"></ion-icon>
+        </ion-thumbnail>
+        <ion-text>Orders</ion-text>
+      </ion-card>
+    </ion-col>
+
+    <ion-col size="6">
+      <ion-card (click)="scanAndPay()">
+        <ion-thumbnail  [style.background]="'rgba(46,46,46, 0.2)'">
+          <ion-icon name="logo-paypal" color="dark"></ion-icon>
+        </ion-thumbnail>
+        <ion-text>ScanQR and Pay</ion-text>
+      </ion-card>
+    </ion-col>
+    </ion-row>
+
+    <ion-toast
+    [isOpen]="isToast"
+    [message]="toastData?.message"
+    [position]="'bottom'"
+    [duration]="3000"
+    [color]="toastData?.color"
+    (didDismiss)="isToast = false">
+    </ion-toast>
 </ion-content>
