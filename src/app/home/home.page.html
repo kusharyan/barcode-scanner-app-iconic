@@ -1,10 +1,18 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-buttons  slot="end">
-      <ion-button fill="clear" color="dark" routerLink="cart">
-        <ion-icon name="cart-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+
+    @if (totalItems > 0){
+      <ion-buttons  slot="end">
+        <ion-button fill="clear" color="dark" routerLink="cart">
+          <ion-icon name="cart-outline"></ion-icon>
+          <ion-badge>
+            <ion-text>
+              {{totalItems}}
+            </ion-text>
+          </ion-badge>
+        </ion-button>
+      </ion-buttons>
+    }
   </ion-toolbar>
 </ion-header>
 
@@ -26,7 +34,7 @@
   <ion-list-header>Your Insigths</ion-list-header>
   <ion-row class="ion-margin">
     <ion-col size="6" (click)="startScanBarcode()">
-      <ion-card>
+      <ion-card color="light">
         <ion-thumbnail  [style.background]="'rgba(240,94,112, 0.2)'">
           <ion-icon name="scan-outline" color="teritiary"></ion-icon>
         </ion-thumbnail>
@@ -35,7 +43,7 @@
     </ion-col>
 
     <ion-col size="6">
-      <ion-card routerLink="products">
+      <ion-card color="light" routerLink="products">
         <ion-thumbnail  [style.background]="'rgba(255,152,0, 0.2)'">
           <ion-icon name="list-outline" color="warning"></ion-icon>
         </ion-thumbnail>
@@ -44,7 +52,7 @@
     </ion-col>
 
     <ion-col size="6">
-      <ion-card>
+      <ion-card color="light">
         <ion-thumbnail  [style.background]="'rgba(76,175,80, 0.2)'">
           <ion-icon name="checkmark-circle" color="success"></ion-icon>
         </ion-thumbnail>
@@ -53,7 +61,7 @@
     </ion-col>
 
     <ion-col size="6">
-      <ion-card>
+      <ion-card color="light">
         <ion-thumbnail  [style.background]="'rgba(94,155,240, 0.2)'">
           <ion-icon name="bag-outline" color="secondary"></ion-icon>
         </ion-thumbnail>
@@ -62,7 +70,7 @@
     </ion-col>
 
     <ion-col size="6">
-      <ion-card (click)="scanAndPay()">
+      <ion-card color="light" (click)="scanAndPay()">
         <ion-thumbnail  [style.background]="'rgba(46,46,46, 0.2)'">
           <ion-icon name="logo-paypal" color="dark"></ion-icon>
         </ion-thumbnail>

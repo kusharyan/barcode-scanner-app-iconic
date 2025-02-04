@@ -14,14 +14,15 @@ import {
   IonListHeader,
   IonCol,
   IonRow,
-  IonCard, IonToast } from '@ionic/angular/standalone';
+  IonCard, IonToast, IonBadge } from '@ionic/angular/standalone';
 import { CartService } from '../services/cart/cart.service';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   standalone: true,
-  imports: [IonToast, 
+  imports: [IonBadge, IonToast, 
     IonCard,
     IonRow,
     IonCol,
@@ -42,14 +43,32 @@ import { CartService } from '../services/cart/cart.service';
 export class HomePage {
   isToast = true;
   toastData:any = [];
+  totalItems: number = 0;
+  cartSub!: Subscription;
 
   private cartService = inject(CartService);
   constructor() {}
 
+  ngOnInIt () {
+    this.cartSub = this.cartService.cart.subscribe({
+      next: (cart) => {
+        console.log(cart);
+        this.totalItems = cart ? cart?.totalItems : 0;
+      }
+    })
+  }
 
   async startScanBarcode(){
     try{
       const code = this.cartService.startScan();
+      if (!code){
+        this.isToast = true;
+        this.toastData = {
+          color: 'danger',
+          message: 'No Such Barcode Available',
+        };
+        return;
+      }
       console.log(code)
     }catch(e){
       console.log(e);
@@ -60,6 +79,19 @@ export class HomePage {
   async scanAndPay(){
     try{
       const code = this.cartService.startScan(0);
+      if (!code){
+        this.isToast = true;
+        this.toastData = {
+          color: 'danger',
+          message: 'No Such Barcode Available',
+        };
+        return;
+      }
+      this.isToast = true;
+      this.toastData = {
+        color: 'success',
+        message: 'Payment Successful'
+      }
       console.log(code)
     }catch(e){
       console.log(e);

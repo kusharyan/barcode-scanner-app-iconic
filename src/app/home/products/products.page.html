@@ -1,7 +1,8 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-title>Products</ion-title>
-    <ion-buttons>
+
+    <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
@@ -9,44 +10,46 @@
 
 <ion-content>
   <ion-list class="ion-margin-top">
-    @for (item of items; track $index) {
-      <ion-item>
-        <ion-thumbnail slot="start">
-          <ion-img [src]="item?.cover"></ion-img>
-        </ion-thumbnail>
-        <ion-label>
-          <ion-text>
-            {{item?.name}}
-            <p>{{item?.description}}</p>
-            <p>
-              <ion-text color="primary">{{currency}}{{item?.price}}</ion-text>
-            </p>
-          </ion-text>
-        </ion-label>
+    @for(item of items; track $index) {
+    <ion-item>
+      <ion-thumbnail slot="start">
+        <ion-img [src]="item?.cover"></ion-img>
+      </ion-thumbnail>
 
-        <ion-button 
-        (click)="getBarcodeData(item)"
+      <ion-label>
+        {{item?.name}}
+        <p>{{item?.description}}</p>
+        <p>
+          <ion-text color="primary">{{currency}}{{item?.price}}</ion-text>
+        </p>
+      </ion-label>
+
+      <ion-button
         slot="end"
         fill="clear"
-        color="dark">
-          <ion-icon  name="barcode-outline"></ion-icon>
-        </ion-button>
-      </ion-item>
+        color="dark"
+        (click)="getBarcodeData(item)"
+      >
+        <ion-icon slot="icon-only" name="barcode-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
     }
   </ion-list>
 
-  <ion-modal 
-  [isOpen]="showBarcode" 
-  (didDismiss)="showBarcode = false" 
-  [breakpoints]="[0.3, 0.5, 0.9]" 
-  [initialBreakpoint]="0.5">
-  
+  <ion-modal
+    #barcode_modal
+    [isOpen]="showBarcode"
+    (didDismiss)="showBarcode = false"
+    [breakpoints]="[0.3, 0.5, 0.9]"
+    [initialBreakpoint]="0.5"
+  >
     <ng-template>
+
       <ion-header class="ion-no-border">
         <ion-toolbar>
           <ion-title>{{ itemModel?.name }}</ion-title>
           <ion-buttons slot="end">
-            <ion-button size="small" (click)="showBarcode = false" color="dark" fill="clear">
+            <ion-button (click)="barcode_modal.dismiss()" color="dark">
               <ion-icon name="close-outline"></ion-icon>
             </ion-button>
           </ion-buttons>
@@ -56,9 +59,9 @@
       <ion-content>
         <div class="ion-margin">
           <ion-label>
-            scan barcode
+            Scan Barcode
           </ion-label>
-          <img id="barcode" class="ion-margin-top"/>
+          <img id="barcode" class="ion-margin-top">
         </div>
       </ion-content>
 
